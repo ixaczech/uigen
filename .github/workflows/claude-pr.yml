@@ -28,14 +28,7 @@ jobs:
           **PR Information:**
           - **Title:** ${TITLE}
           - **Branch:** ${BRANCH}
-
-          **Review Checklist:**
-          - [ ] Code follows project conventions
-          - [ ] Tests added or updated
-          - [ ] No security or performance regressions
-          - [ ] Documentation updated if needed
-          - [ ] Commits are properly signed and have meaningful messages
-
+         
           **Next Steps:**
           1. Ensure all checks pass
           2. Address any feedback from reviewers
