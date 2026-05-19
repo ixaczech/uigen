@@ -31,7 +31,9 @@ jobs:
 
           *This is an automated response. A team member will review shortly.*"
 
-          echo "response=${RESPONSE}" >> $GITHUB_OUTPUT
+          echo "response<<EOF" >> $GITHUB_OUTPUT
+          echo "$RESPONSE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Post Comment
         uses: actions/github-script@v7
