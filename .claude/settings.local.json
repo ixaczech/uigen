@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem \"C:\\\\Temp\\\\uigen\\\\prisma\")",
+      "mcp__playwright"
+    ]
+  }
+}
