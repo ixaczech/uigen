@@ -1,0 +1,58 @@
+name: Claude PR Helper (No Cost)
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  process-pr:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.body, '@claude') || contains(github.event.pull_request.title, '@claude')
+
+    steps:
+      - name: Generate Response
+        id: response
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          AUTHOR="${{ github.event.pull_request.user.login }}"
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+
+          cat >> $GITHUB_OUTPUT <<'RESPONSE_EOF'
+          response<<EOF
+          Thanks for the PR, @${AUTHOR}! 👋
+
+          **PR Information:**
+          - **Title:** ${TITLE}
+          - **Branch:** ${BRANCH}
+
+          **Review Checklist:**
+          - [ ] Code follows project conventions
+          - [ ] Tests added or updated
+          - [ ] No security or performance regressions
+          - [ ] Documentation updated if needed
+          - [ ] Commits are properly signed and have meaningful messages
+
+          **Next Steps:**
+          1. Ensure all checks pass
+          2. Address any feedback from reviewers
+          3. Keep commits clean and organized
+
+          *This is an automated response. A team member will review shortly.*
+          EOF
+          RESPONSE_EOF
+
+      - name: Post Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.pulls.createReview({
+              pull_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `${{ steps.response.outputs.response }}`,
+              event: 'COMMENT'
+            })
