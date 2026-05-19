@@ -20,22 +20,22 @@ jobs:
           AUTHOR="${{ github.event.pull_request.user.login }}"
           BRANCH="${{ github.event.pull_request.head.ref }}"
 
-          cat >> $GITHUB_OUTPUT <<'RESPONSE_EOF'
-          response<<EOF
+          cat >> $GITHUB_OUTPUT <<EOF
+          response<<RESPONSE_EOF
           Thanks for the PR, @${AUTHOR}! 👋
 
           **PR Information:**
           - **Title:** ${TITLE}
           - **Branch:** ${BRANCH}
-         
+
           **Next Steps:**
           1. Ensure all checks pass
           2. Address any feedback from reviewers
           3. Keep commits clean and organized
 
           *This is an automated response. A team member will review shortly.*
-          EOF
           RESPONSE_EOF
+          EOF
 
       - name: Post Comment
         uses: actions/github-script@v7
